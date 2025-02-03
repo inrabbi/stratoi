@@ -9,8 +9,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 
 # Replace with your Telegram bot token and chat ID
-TELEGRAM_BOT_TOKEN = '7912231021:AAHKT91d4H_QHDGvgvoh8mQQtlXJTKk0lLQ'
-TELEGRAM_CHAT_ID = '1174627659'
+TELEGRAM_BOT_TOKEN = '7415898889:AAFeEpzmf1AhVgtVr6NwnRZUmI32B1dyrKA'
+TELEGRAM_CHAT_ID = '1249855882'
 
 # Function to send message to Telegram
 def send_to_telegram(message):
