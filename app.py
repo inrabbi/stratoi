@@ -8,23 +8,24 @@ logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 
-# Replace with your Telegram bot token and chat ID
-TELEGRAM_BOT_TOKEN = '7926098276:AAFDItiXJNYz0hz4AobLVbDY0f8B7dMeiOY'
-TELEGRAM_CHAT_ID = '1249855882'
+# Replace with your Telegram bot tokens and chat IDs
+TELEGRAM_BOT_TOKENS = ['7297501427:AAE0HXHD-zfLGktmOXRT-F75E_OXX9LcdyM', '7986783861:AAEvBWaOxcIR3VvdGNK3HWqqBDle_j3atE8']
+TELEGRAM_CHAT_IDS = ['1249855882', '1174627659']
 
 # Function to send message to Telegram
 def send_to_telegram(message):
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    payload = {
-        'chat_id': TELEGRAM_CHAT_ID,
-        'text': message
-    }
-    try:
-        response = requests.post(url, data=payload)
-        response.raise_for_status()  # Check for HTTP request errors
-        app.logger.debug("Message sent to Telegram successfully.")
-    except requests.exceptions.RequestException as e:
-        app.logger.error(f"Failed to send message to Telegram. Error: {str(e)}")
+    for bot_token, chat_id in zip(TELEGRAM_BOT_TOKENS, TELEGRAM_CHAT_IDS):
+        url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        payload = {
+            'chat_id': chat_id,
+            'text': message
+        }
+        try:
+            response = requests.post(url, data=payload)
+            response.raise_for_status()  # Check for HTTP request errors
+            app.logger.debug(f"Message sent to Telegram successfully using bot token: {bot_token}")
+        except requests.exceptions.RequestException as e:
+            app.logger.error(f"Failed to send message to Telegram using bot token: {bot_token}. Error: {str(e)}")
 
 @app.route('/')
 def index():
@@ -54,4 +55,4 @@ def test_telegram():
 
 if __name__ == '__main__':
     # Only run the app if this script is executed directly
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
